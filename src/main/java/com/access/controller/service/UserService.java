@@ -33,12 +33,34 @@ public class UserService {
         CommandResponseObject command = new CommandResponseObject();
         return command;
     }
-    
+    /**
+     * Register realizará um cadastro de uma nova pessoa.
+     * O algoritmo vai procurar o id biometria mais próximo para o novo usuário.
+     * @param information
+     * @return 
+     */
     public boolean register(RegisterUserRequestObject information) {
-        UserModel model = new UserModel();
-        model.setName(information.getName());
-        model.setAccess(information.getAccess());
-        try { model = repo.save(model); } catch(Exception er) { return false; }
-        return !model.getName().isEmpty();
+        UserModel user = repo.findByName(information.getName());
+        int idBiometry = 0;
+        if(user == null) {
+            for(int i = 0; i < 150; i++) {
+                user = repo.findByIdBiometry(i);
+                if(user == null) {
+                    idBiometry = i;
+                    break;
+                }
+            }
+            if(user == null) {
+                UserModel newUser = new UserModel();
+                newUser.setName(information.getName());
+                newUser.setAccess(information.getAccess());
+                newUser.setIdBiometry(idBiometry);
+                try {
+                    newUser = repo.save(newUser);
+                    return newUser != null;
+                } catch (Exception er) { }
+            }
+        }
+        return false;
     }
 }

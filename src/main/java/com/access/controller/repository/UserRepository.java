@@ -13,5 +13,6 @@ import org.springframework.data.repository.CrudRepository;
  * @author Jucelio
  */
 public interface UserRepository extends CrudRepository<UserModel, Integer> {
-    
+    public UserModel findByName(String name);
+    public UserModel findByIdBiometry(int id); 
 }

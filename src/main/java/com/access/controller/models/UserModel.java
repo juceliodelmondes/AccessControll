@@ -26,10 +26,10 @@ public class UserModel {
     @Column(length = 255)
     private String token;
     @Column(length = 3)
-    private int idBiometry;
+    private int idBiometry; 
     private boolean access;
     
-    public int getId() {
+    public int getId() { 
         return this.id;
     }
     
