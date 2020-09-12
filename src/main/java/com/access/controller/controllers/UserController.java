@@ -5,9 +5,11 @@
  */
 package com.access.controller.controllers;
 
-import com.access.controller.models.UserModel;
-import com.access.controller.repository.UserRepository;
+import com.access.controller.requestObject.ValidationRequestObject;
+import com.access.controller.responseObject.CommandResponseObject;
+import com.access.controller.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,11 +23,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     
     @Autowired
-    UserRepository repo;
-    
+    UserService user;
+    /**
+     * Requisição do CSharp para validar a biometria de um usuário
+     * @param information
+     * @return 
+     */
     @RequestMapping(value = "/validate", method = RequestMethod.POST)
-    public void validate() {
-        System.out.println("Validando usuario");
+    public CommandResponseObject validate(@RequestBody ValidationRequestObject information) {
+        return user.validateAccess(information);
     }
     
     @RequestMapping(value = "/register", method = RequestMethod.POST)
