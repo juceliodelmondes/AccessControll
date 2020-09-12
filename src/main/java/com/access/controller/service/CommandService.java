@@ -18,12 +18,10 @@ public class CommandService {
     }
     
     public CommandResponseObject getNextCommand() {
-        System.out.println("Capturando próximo comando");
         CommandResponseObject command = new CommandResponseObject();
         if(comandos.size() > 0) {
             command = comandos.get(0);
             comandos.remove(0);
-            System.out.println("Enviando comando "+command.getCommand());
         }
         return command;
     }

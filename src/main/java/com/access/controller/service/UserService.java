@@ -7,6 +7,7 @@ package com.access.controller.service;
 
 import com.access.controller.models.UserModel;
 import com.access.controller.repository.UserRepository;
+import com.access.controller.requestObject.DeleteUserRequestObject;
 import com.access.controller.requestObject.RegisterUserRequestObject;
 import com.access.controller.requestObject.ValidationRequestObject;
 import com.access.controller.responseObject.CommandResponseObject;
@@ -35,7 +36,11 @@ public class UserService {
         System.out.println("Validando usuario");
         CommandResponseObject command = new CommandResponseObject();
         UserModel user = repo.findByIdBiometry(information.getId());
-        System.out.println("Usuário: "+user.getName()+" acesso: "+user.getAccess());
+        if(user != null) System.out.println("Usuário: "+user.getName()+" acesso: "+user.getAccess());
+        if(user == null) { //caso tenha o dado gravado no sensor e não tiver no banco, remover do sensor
+            command.setCommand(command.deleteUser);
+            command.setCommandParameter(information.getId());
+        }
         return command;
     }
     /**
@@ -71,5 +76,20 @@ public class UserService {
             }
         }
         return false;
+    }
+    /**
+     * Deleta o usuario do bando de dados e do cadastro da biometria
+     * @param information
+     * @return 
+     */
+    public void delete(DeleteUserRequestObject information) {
+        UserModel user = repo.findByName(information.getName());
+        if(user != null) {
+            CommandResponseObject commandObj = new CommandResponseObject();
+            commandObj.setCommand(commandObj.deleteUser);
+            commandObj.setCommandParameter(user.getIdBiometry());
+            command.newCommand(commandObj);
+            repo.deleteById(repo.findByName(information.getName()).getId());
+        }
     }
 }

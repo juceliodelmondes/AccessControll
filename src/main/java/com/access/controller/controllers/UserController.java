@@ -5,6 +5,7 @@
  */
 package com.access.controller.controllers;
 
+import com.access.controller.requestObject.DeleteUserRequestObject;
 import com.access.controller.requestObject.RegisterUserRequestObject;
 import com.access.controller.requestObject.ValidationRequestObject;
 import com.access.controller.responseObject.CommandResponseObject;
@@ -39,5 +40,10 @@ public class UserController {
     public boolean register(@RequestBody RegisterUserRequestObject information) {
         System.out.println("Registrando usuário");
         return user.register(information);
+    }
+    
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public void delete(@RequestBody DeleteUserRequestObject information) {
+        user.delete(information); 
     }
 }
