@@ -5,7 +5,6 @@
  */
 package com.access.controller.models;
 
-import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,6 +25,9 @@ public class UserModel {
     private String name;
     @Column(length = 255)
     private String token;
+    @Column(length = 3)
+    private int idBiometry;
+    private boolean access;
     
     public int getId() {
         return this.id;
@@ -49,5 +51,21 @@ public class UserModel {
     
     public void setToken(String token) {
         this.token = token;
+    }
+    
+    public int getIdBiometry() {
+        return this.idBiometry;
+    }
+    
+    public void setIdBiometry(int idBiometry) {
+        this.idBiometry = idBiometry;
+    }
+    
+    public boolean getAccess() {
+        return this.access;
+    }
+    
+    public void setAccess(boolean access) {
+        this.access = access;
     }
 }
