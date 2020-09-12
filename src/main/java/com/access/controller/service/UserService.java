@@ -23,6 +23,9 @@ public class UserService {
     @Autowired
     UserRepository repo;
     
+    @Autowired
+    CommandService command;
+    
     /**
      * Valida o Id (leitor) com o banco de dados com o tipo de acesso
      * @param information
@@ -31,6 +34,8 @@ public class UserService {
     public CommandResponseObject validateAccess(ValidationRequestObject information) {
         System.out.println("Validando usuario");
         CommandResponseObject command = new CommandResponseObject();
+        UserModel user = repo.findByIdBiometry(information.getId());
+        System.out.println("Usuário: "+user.getName()+" acesso: "+user.getAccess());
         return command;
     }
     /**
@@ -57,6 +62,10 @@ public class UserService {
                 newUser.setIdBiometry(idBiometry);
                 try {
                     newUser = repo.save(newUser);
+                    CommandResponseObject commandObj = new CommandResponseObject();
+                    commandObj.setCommand(commandObj.registerUser);
+                    commandObj.setCommandParameter(idBiometry);
+                    command.newCommand(commandObj);
                     return newUser != null;
                 } catch (Exception er) { }
             }

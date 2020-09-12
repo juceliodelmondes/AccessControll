@@ -13,7 +13,7 @@ public class CommandResponseObject {
     public final String deleteUser = "d";
     
     private String command; //comando 
-    private String commandParameter; //Parâmetro do comando
+    private int commandParameter; //Parâmetro do comando
       
     
     public String getCommand() {
@@ -24,11 +24,11 @@ public class CommandResponseObject {
         this.command = command;
     }
     
-    public String getCommandParameter() {
+    public int getCommandParameter() {
         return this.commandParameter;
     }
     
-    public void setCommandParameter(String parameter) {
+    public void setCommandParameter(int parameter) {
         this.commandParameter = parameter;
     }
 }
