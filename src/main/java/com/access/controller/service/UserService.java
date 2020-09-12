@@ -5,7 +5,9 @@
  */
 package com.access.controller.service;
 
+import com.access.controller.models.UserModel;
 import com.access.controller.repository.UserRepository;
+import com.access.controller.requestObject.RegisterUserRequestObject;
 import com.access.controller.requestObject.ValidationRequestObject;
 import com.access.controller.responseObject.CommandResponseObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +32,13 @@ public class UserService {
         System.out.println("Validando usuario");
         CommandResponseObject command = new CommandResponseObject();
         return command;
+    }
+    
+    public boolean register(RegisterUserRequestObject information) {
+        UserModel model = new UserModel();
+        model.setName(information.getName());
+        model.setAccess(information.getAccess());
+        try { model = repo.save(model); } catch(Exception er) { return false; }
+        return !model.getName().isEmpty();
     }
 }

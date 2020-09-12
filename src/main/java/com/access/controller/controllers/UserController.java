@@ -5,6 +5,7 @@
  */
 package com.access.controller.controllers;
 
+import com.access.controller.requestObject.RegisterUserRequestObject;
 import com.access.controller.requestObject.ValidationRequestObject;
 import com.access.controller.responseObject.CommandResponseObject;
 import com.access.controller.service.UserService;
@@ -35,7 +36,8 @@ public class UserController {
     }
     
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public void register() {
+    public boolean register(@RequestBody RegisterUserRequestObject information) {
         System.out.println("Registrando usuário");
+        return user.register(information);
     }
 }

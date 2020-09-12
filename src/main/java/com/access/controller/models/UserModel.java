@@ -21,7 +21,7 @@ public class UserModel {
     @GeneratedValue //gera um id automaticamente
     private int id;
     
-    @Column(length = 60)
+    @Column(length = 60, unique = true)
     private String name;
     @Column(length = 255)
     private String token;
