@@ -11,6 +11,9 @@ import com.access.controller.requestObject.DeleteUserRequestObject;
 import com.access.controller.requestObject.RegisterUserRequestObject;
 import com.access.controller.requestObject.ValidationRequestObject;
 import com.access.controller.responseObject.CommandResponseObject;
+import com.access.controller.responseObject.UserAccessResponseObject;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +24,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
     
+    private List<UserAccessResponseObject> usersAccess = new ArrayList<>();
+    
     @Autowired
     UserRepository repo;
     
     @Autowired
     CommandService command;
+    
+    
     
     /**
      * Valida o Id (leitor) com o banco de dados com o tipo de acesso
@@ -36,8 +43,13 @@ public class UserService {
         System.out.println("Validando usuario");
         CommandResponseObject command = new CommandResponseObject();
         UserModel user = repo.findByIdBiometry(information.getId());
-        if(user != null) System.out.println("Usuário: "+user.getName()+" acesso: "+user.getAccess());
-        if(user == null) { //caso tenha o dado gravado no sensor e não tiver no banco, remover do sensor
+        if(user != null) {
+            System.out.println("Usuário: "+user.getName()+" acesso: "+user.getAccess());
+            UserAccessResponseObject newAccess = new UserAccessResponseObject();
+            newAccess.setName(user.getName());
+            newAccess.setAccess(user.getAccess());
+            usersAccess.add(newAccess);
+        } else { //caso tenha o dado gravado no sensor e não tiver no banco, remover do sensor
             command.setCommand(command.deleteUser);
             command.setCommandParameter(information.getId());
         }
@@ -91,5 +103,14 @@ public class UserService {
             command.newCommand(commandObj);
             repo.deleteById(repo.findByName(information.getName()).getId());
         }
+    }
+    
+    public UserAccessResponseObject searchUserAccess() {
+        UserAccessResponseObject userAccess = new UserAccessResponseObject();
+        if(usersAccess.size() > 0) {
+            userAccess = usersAccess.get(0);
+            usersAccess.remove(0);
+        }
+        return userAccess;
     }
 }

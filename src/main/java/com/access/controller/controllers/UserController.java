@@ -9,6 +9,7 @@ import com.access.controller.requestObject.DeleteUserRequestObject;
 import com.access.controller.requestObject.RegisterUserRequestObject;
 import com.access.controller.requestObject.ValidationRequestObject;
 import com.access.controller.responseObject.CommandResponseObject;
+import com.access.controller.responseObject.UserAccessResponseObject;
 import com.access.controller.service.UserService;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -55,5 +56,10 @@ public class UserController {
     @RequestMapping(value = "/uploadPicture", method = RequestMethod.POST)
     public void uploadPicture(@RequestParam MultipartFile picture) {
         
+    }
+    
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public UserAccessResponseObject search() {
+        return user.searchUserAccess();
     }
 }
