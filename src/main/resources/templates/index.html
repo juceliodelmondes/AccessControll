@@ -1,13 +1,93 @@
 <!DOCTYPE html>
-<html>
+  <html>
     <head>
-        <title>Controlador de acesso!</title>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta charset="UTF-8">
-        
+        <title>Controlador de acesso</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg==" crossorigin="anonymous"></script>
+        <style>
+            body {
+                background-color:black;
+            }
+            .principal{
+                display: flex;
+                flex-direction: column;
+                height: 100vh;
+                width: 100%;
+                align-items: center;
+                justify-content: center;
+            }
+            .div-central{
+                /*background-color: white;*/
+                height: 500px;
+                width: 500px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .div-foto {
+                transition: 1s cubic-bezier(0.02, 0.6, 0.79, 0.98);
+                width: 0%;
+                height: 50%;
+                border-left-style: solid;
+                border-right-style: solid;
+                border-width: thick;
+                border-color: #003d5a00;
+                border-radius:25px;
+                display: flex;
+                justify-content: center;
+            }
+
+            .openDiv {
+                transition: .3s cubic-bezier(0.02, 0.6, 0.79, 0.98);
+                width: 100%;
+                border-color: #003d5a;
+            }
+
+            .efeito1Foto {
+                visibility: hidden;
+            }
+
+            .efeito2Foto {
+                visibility: visible;
+            }
+
+            img {
+                height: 100%;
+                padding: 10px;
+                filter: saturate(0.3);
+                border-radius:15px;
+                animation-name: example;
+                animation-duration: 4s;
+            }
+
+            @keyframes example {
+                0% { display: none; visibility: hidden; }
+                100% { display: block; visibility: block;  }
+            }
+        </style>
     </head>
 
     <body>
-        
-    </body> 
-</script>
-</html>
+        <div class="principal">
+            <div class="div-central">
+                <div class="div-foto" id="div-foto">
+                    <img id="imagem" src='https://img.estadao.com.br/fotos/crop/1200x900/resources/jpg/7/6/1566336669167.jpg'/>
+                </div>
+            </div>
+        </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        function efeitoFoto() {
+            let elemento = document.getElementById("imagem")
+            for(i = 0; i < 11; i++){
+                if(i % 2 == 0) elemento.classList.add("efeito1Foto");
+                if(i % 2 == 1) elemento.classList.remove("efeito1Foto");
+            }
+        }
+    </script>
+    </body>
+  </html>

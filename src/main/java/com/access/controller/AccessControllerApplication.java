@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class AccessControllerApplication {
 
     public static void main(String[] args) {
-            SpringApplication.run(AccessControllerApplication.class, args);
+        SpringApplication.run(AccessControllerApplication.class, args);
     }
 
 }

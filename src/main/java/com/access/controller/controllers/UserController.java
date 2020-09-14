@@ -10,11 +10,16 @@ import com.access.controller.requestObject.RegisterUserRequestObject;
 import com.access.controller.requestObject.ValidationRequestObject;
 import com.access.controller.responseObject.CommandResponseObject;
 import com.access.controller.service.UserService;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -45,5 +50,10 @@ public class UserController {
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public void delete(@RequestBody DeleteUserRequestObject information) {
         user.delete(information); 
+    }
+    
+    @RequestMapping(value = "/uploadPicture", method = RequestMethod.POST)
+    public void uploadPicture(@RequestParam MultipartFile picture) {
+        
     }
 }
