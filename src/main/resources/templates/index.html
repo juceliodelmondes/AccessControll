@@ -30,6 +30,7 @@
 
             .div-foto {
                 transition: 1s cubic-bezier(0.02, 0.6, 0.79, 0.98);
+                transition-delay: .3s;
                 width: 0%;
                 height: 50%;
                 border-left-style: solid;
@@ -47,27 +48,19 @@
                 border-color: #003d5a;
             }
 
-            .efeito1Foto {
-                visibility: hidden;
-            }
-
-            .efeito2Foto {
-                visibility: visible;
-            }
-
             img {
                 height: 100%;
                 padding: 10px;
-                filter: saturate(0.3);
+                filter: opacity(0) saturate(0.3);
                 border-radius:15px;
-                animation-name: example;
-                animation-duration: 4s;
             }
 
-            @keyframes example {
-                0% { display: none; visibility: hidden; }
-                100% { display: block; visibility: block;  }
+            .efeitoImagem{
+                transition: filter 0.5s linear;
+                transition-delay: .5s;
+                filter:opacity(1) saturate(0.3);
             }
+
         </style>
     </head>
 
@@ -81,12 +74,19 @@
         </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
-        function efeitoFoto() {
-            let elemento = document.getElementById("imagem")
-            for(i = 0; i < 11; i++){
-                if(i % 2 == 0) elemento.classList.add("efeito1Foto");
-                if(i % 2 == 1) elemento.classList.remove("efeito1Foto");
-            }
+        function visualizarFoto() {
+            let divFoto = document.getElementById('div-foto');
+            let foto = document.getElementById('imagem');
+            divFoto.classList.add("openDiv");
+            foto.classList.add("efeitoImagem")
+        }
+
+        function fecharFoto() {
+            
+            let divFoto = document.getElementById('div-foto');
+            let foto = document.getElementById('imagem');
+            divFoto.classList.remove("openDiv");
+            foto.classList.remove("efeitoImagem")
         }
     </script>
     </body>
