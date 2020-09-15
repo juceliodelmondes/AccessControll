@@ -30,9 +30,7 @@ public class UserService {
     UserRepository repo;
     
     @Autowired
-    CommandService command;
-    
-    
+    CommandService command;   
     
     /**
      * Valida o Id (leitor) com o banco de dados com o tipo de acesso
@@ -55,6 +53,7 @@ public class UserService {
         }
         return command;
     }
+    
     /**
      * Register realizará um cadastro de uma nova pessoa.
      * O algoritmo vai procurar o id biometria mais próximo para o novo usuário.
@@ -89,6 +88,7 @@ public class UserService {
         }
         return false;
     }
+    
     /**
      * Deleta o usuario do bando de dados e do cadastro da biometria
      * @param information
@@ -105,6 +105,10 @@ public class UserService {
         }
     }
     
+    /**
+     * Procura quais acessos que estão sendo validados no momento. (Para o front-end)
+     * @return Objeto UserAccessResponseObject
+     */
     public UserAccessResponseObject searchUserAccess() {
         UserAccessResponseObject userAccess = new UserAccessResponseObject();
         if(usersAccess.size() > 0) {

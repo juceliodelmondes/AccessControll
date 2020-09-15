@@ -17,6 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @RestController
 public class IndexController {
+    /**
+     * Retorna a página index no endereço /
+     * @return 
+     */
     @RequestMapping(value = "/", method = RequestMethod.GET) 
     public ModelAndView index() {
         System.out.println("INDEX"); 

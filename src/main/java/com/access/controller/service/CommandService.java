@@ -12,11 +12,17 @@ import org.springframework.stereotype.Service;
 @Service 
 public class CommandService {
     public List<CommandResponseObject> comandos = new ArrayList<>();
-    
+    /**
+     * Adiciona novo comando para o Arduino executar.
+     * @param command 
+     */
     public void newCommand(CommandResponseObject command) {
         comandos.add(command);
     }
-    
+    /**
+     * Retorna qual o príxmo comando que o Arduino deverá executar
+     * @return 
+     */
     public CommandResponseObject getNextCommand() {
         CommandResponseObject command = new CommandResponseObject();
         if(comandos.size() > 0) {

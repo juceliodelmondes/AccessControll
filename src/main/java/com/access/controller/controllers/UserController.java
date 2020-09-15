@@ -40,23 +40,37 @@ public class UserController {
     public CommandResponseObject validate(@RequestBody ValidationRequestObject information) {
         return user.validateAccess(information);
     }
-    
+    /**
+     * Registra um novo usuário
+     * @param information
+     * @return true em caso de sucesso
+     */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public boolean register(@RequestBody RegisterUserRequestObject information) {
         System.out.println("Registrando usuário");
         return user.register(information);
     }
-    
+    /**
+     * Deleta um usuário
+     * @param information 
+     */
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public void delete(@RequestBody DeleteUserRequestObject information) {
         user.delete(information); 
     }
     
+    /**
+     * Recebe a foto e grava no diretorio
+     * @param picture 
+     */
     @RequestMapping(value = "/uploadpicture", method = RequestMethod.POST)
     public void uploadPicture(@RequestParam MultipartFile picture) {
         
     }
-    
+    /**
+     * Retorna quais usuários que estão sendo validados no exato momento.
+     * @return 
+     */
     @RequestMapping(value = "/searchuseraccess", method = RequestMethod.GET)
     public UserAccessResponseObject searchUserAccess() {
         return user.searchUserAccess();

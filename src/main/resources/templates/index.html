@@ -20,7 +20,7 @@
                 justify-content: center;
             }
             .div-central{
-                /*background-color: white;*/
+                /*background-color: green;*/
                 height: 90%;
                 min-height: 500px;
                 width: 900px;
@@ -85,7 +85,15 @@
                 filter:opacity(0.3)
             }
 
-
+            .div-biometria {
+                border-left-style: solid;
+                border-right-style: solid;
+                border-width: thick;
+                border-color: white;
+                margin: 20px;
+                width: 400px;
+                height: 100px;
+            }
 
         </style>
     </head>
@@ -96,6 +104,9 @@
                 <div class="div-foto" id="div-foto">
                     <img class="imgp" id="imagem" src='https://img.estadao.com.br/fotos/crop/1200x900/resources/jpg/7/6/1566336669167.jpg'/>
                     <img class="lines" id="lines" src="/horizontal2.png"/>
+                </div>
+                <div class="div-biometria">
+                    aa
                 </div>
             </div>
         </div>
@@ -117,7 +128,7 @@
                 }, 30);
             }, 400);
         }
-        
+        visualizarFoto();
         const fecharFoto = () => {
             let divFoto = document.getElementById('div-foto');
             let foto = document.getElementById('imagem');
@@ -151,7 +162,6 @@
                 pesquisarAcessos();
             }, 500);
         }
-        exibirFoto();
         inicializar();
     </script>
     </body>

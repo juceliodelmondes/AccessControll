@@ -19,7 +19,10 @@ public class CommandController {
     
     @Autowired
     CommandService command;
-    
+    /**
+     * Requisição para retornar os comandos que estão em fila para o arduino executar, (buffer lista)
+     * @return 
+     */
     @RequestMapping(value = "/getCommand", method = RequestMethod.GET)
     public CommandResponseObject getCommand() {
         return command.getNextCommand();
