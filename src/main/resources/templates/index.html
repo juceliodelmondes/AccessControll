@@ -86,8 +86,8 @@
             }
 
             .div-biometria {
-                border-left-style: solid;
-                border-right-style: solid;
+                /*border-left-style: solid;
+                border-right-style: solid;*/
                 border-width: thick;
                 border-color: white;
                 margin: 20px;
@@ -110,6 +110,10 @@
                 margin: auto;
                 font-family: monospace;
             }
+
+            .acessoLiberado {
+                border-color:green;
+            }
         </style>
     </head>
 
@@ -120,7 +124,7 @@
                     <img class="imgp" id="imagem" src='https://img.estadao.com.br/fotos/crop/1200x900/resources/jpg/7/6/1566336669167.jpg'/>
                     <img class="lines" id="lines" src="/horizontal2.png"/>
                 </div>
-                <div class="div-biometria">
+                <div class="div-biometria" id="div-biometria">
                     <div class="aguardando-biometria">
                         <h6 id="texto-aguardando"></h6>
                     </div>
@@ -129,9 +133,7 @@
         </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
-        visualizando = false;
         const visualizarFoto = () => {
-            visualizando = true;
             let divFoto = document.getElementById('div-foto');
             let foto = document.getElementById('imagem');
             let lines = document.getElementById("lines");
@@ -162,7 +164,7 @@
                 contador++;
                 if(contador == 10) clearInterval(efeito);
             }, 25);
-            visualizando = false;
+            digitarTexto("Aguardando biometria", "texto-aguardando");
         }
         
         const exibirFoto = () => {
@@ -173,6 +175,11 @@
         const pesquisarAcessos = () => {
             axios.get("http://localhost:8080/user/searchuseraccess").then(result => {
                 if(result.data.name != null) {
+                    digitarTexto(result.data.name, "texto-aguardando");
+                    let elemento = document.getElementById("div-biometria");
+                    if(result.data.access) {
+                        console.log(elemento);
+                    }
                     exibirFoto();
                 }
             });
@@ -200,13 +207,15 @@
             }
         }
 
+        timertexto = "";
         const digitarTexto = (textoParams, id) => {
             let contadorTexto = 0;
             let texto = document.getElementById(id);
             const textoPadrao = textoParams;
             texto.innerHTML = "";
             pararBarraVertical(id);
-            let timertexto = setInterval(() => {
+            if(typeof timertexto != undefined) clearInterval(timertexto);
+            timertexto = setInterval(() => {
                 texto.innerHTML += textoPadrao.slice(contadorTexto, contadorTexto+1);
                 texto.innerHTML = texto.innerHTML.replace(/█/g,"")+"█";
                 contadorTexto++;
