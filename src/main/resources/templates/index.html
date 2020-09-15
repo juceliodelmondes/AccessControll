@@ -110,9 +110,9 @@
                 margin: auto;
                 font-family: monospace;
             }
-
-            .acessoLiberado {
-                border-color:green;
+        
+            .invisivel {
+                display: none;
             }
         </style>
     </head>
@@ -120,6 +120,7 @@
     <body>
         <div class="principal">
             <div class="div-central">
+                <h1 style="color: white; position:absolute" id="icone"></h1>
                 <div class="div-foto" id="div-foto">
                     <img class="imgp" id="imagem" src='https://img.estadao.com.br/fotos/crop/1200x900/resources/jpg/7/6/1566336669167.jpg'/>
                     <img class="lines" id="lines" src="/horizontal2.png"/>
@@ -137,6 +138,7 @@
             let divFoto = document.getElementById('div-foto');
             let foto = document.getElementById('imagem');
             let lines = document.getElementById("lines");
+            let icon = document.getElementById('icone').classList.add("invisivel");
             divFoto.classList.add("openDiv");
             foto.classList.add("efeito2Imagem");
             setTimeout(() => {
@@ -162,8 +164,12 @@
                 if(contador % 2 == 0) lines.classList.add("lineOn");
                 if(contador % 2 != 0) lines.classList.remove("lineOn");
                 contador++;
-                if(contador == 10) clearInterval(efeito);
+                if(contador == 10) {
+                    clearInterval(efeito);
+                    document.getElementById('icone').classList.remove("invisivel");
+                }
             }, 25);
+            
             digitarTexto("Aguardando biometria", "texto-aguardando");
         }
         
@@ -223,9 +229,23 @@
                     clearInterval(timertexto);
                     animarBarraVertical(id);
                 }
-            }, 70);
+            }, 50);
         }
         digitarTexto("Aguardando biometria","texto-aguardando");        
+
+        const icone = () => {
+            let icon = document.getElementById('icone');
+            let contador = 0;
+            setInterval(() => {
+                if(contador == 0) icon.innerHTML = "—";
+                if(contador == 1) icon.innerHTML = "\\";
+                if(contador == 2) icon.innerHTML = "|";
+                if(contador == 3) icon.innerHTML = "/";
+                contador++;
+                if(contador == 4) contador = 0;
+            }, 100)
+        }
+        icone();
 
         const inicializar = () => {
             setInterval(() => {
