@@ -93,8 +93,23 @@
                 margin: 20px;
                 width: 400px;
                 height: 100px;
+                justify-content: center;
+                align-content: center;
+                border-radius: 15px;
             }
 
+            .aguardando-biometria {
+                display: flex;
+                height: 100%;
+                justify-content: center;
+                align-content: center;
+            }
+
+            .aguardando-biometria h6 {
+                color:white;
+                margin: auto;
+                font-family: monospace;
+            }
         </style>
     </head>
 
@@ -106,13 +121,17 @@
                     <img class="lines" id="lines" src="/horizontal2.png"/>
                 </div>
                 <div class="div-biometria">
-                    aa
+                    <div class="aguardando-biometria">
+                        <h6 id="texto-aguardando"></h6>
+                    </div>
                 </div>
             </div>
         </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
+        visualizando = false;
         const visualizarFoto = () => {
+            visualizando = true;
             let divFoto = document.getElementById('div-foto');
             let foto = document.getElementById('imagem');
             let lines = document.getElementById("lines");
@@ -136,14 +155,16 @@
             divFoto.classList.remove("openDiv");
             foto.classList.remove("efeito2Imagem");
             let contador = 0;
-            let efeito = setInterval(() => {
+            if(typeof efeito != "undefined") clearInterval(efeito);
+            efeito = setInterval(() => {
                 if(contador % 2 == 0) lines.classList.add("lineOn");
                 if(contador % 2 != 0) lines.classList.remove("lineOn");
                 contador++;
                 if(contador == 10) clearInterval(efeito);
             }, 25);
+            visualizando = false;
         }
-
+        
         const exibirFoto = () => {
             visualizarFoto();
             setTimeout(function(){ fecharFoto()}, 4500);
@@ -156,6 +177,30 @@
                 }
             });
         }
+
+        const animacaoTexto = () => {
+            let contadorTexto = 0;
+            let texto = document.getElementById("texto-aguardando");
+            const textoPadrão = " Aguardando biometria ";
+            texto.innerHTML= textoPadrão;
+            let sentido = 1;
+            setInterval(() => {
+                if(sentido === 1) {
+                    contadorTexto++;
+                    if(contadorTexto % 2 == 0) texto.innerHTML = ":"+texto.innerHTML+":"
+                    if(contadorTexto % 2 != 0) texto.innerHTML = "."+texto.innerHTML+"."
+                    if(contadorTexto == 9) sentido = 0;
+                } else if(sentido === 0) {
+                    if(texto.innerHTML.length > textoPadrão.length) {
+                        texto.innerHTML = texto.innerHTML.slice(1, texto.innerHTML.length-1);
+                    } else {
+                        sentido = 1;
+                        contadorTexto = 0;
+                    }
+                }
+            }, 150);
+        }
+        animacaoTexto();
 
         const inicializar = () => {
             setInterval(() => {
