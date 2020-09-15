@@ -181,8 +181,8 @@
         const animacaoTexto = () => {
             let contadorTexto = 0;
             let texto = document.getElementById("texto-aguardando");
-            const textoPadrão = " Aguardando biometria ";
-            texto.innerHTML= textoPadrão;
+            const textoPadrao = " Aguardando biometria ";
+            texto.innerHTML= textoPadrao;
             let sentido = 1;
             setInterval(() => {
                 if(sentido === 1) {
@@ -191,7 +191,7 @@
                     if(contadorTexto % 2 != 0) texto.innerHTML = "."+texto.innerHTML+"."
                     if(contadorTexto == 9) sentido = 0;
                 } else if(sentido === 0) {
-                    if(texto.innerHTML.length > textoPadrão.length) {
+                    if(texto.innerHTML.length > textoPadrao.length) {
                         texto.innerHTML = texto.innerHTML.slice(1, texto.innerHTML.length-1);
                     } else {
                         sentido = 1;
