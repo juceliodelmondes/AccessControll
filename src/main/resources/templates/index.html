@@ -187,8 +187,7 @@
             setInterval(() => {
                 if(sentido === 1) {
                     contadorTexto++;
-                    if(contadorTexto % 2 == 0) texto.innerHTML = ":"+texto.innerHTML+":"
-                    if(contadorTexto % 2 != 0) texto.innerHTML = "."+texto.innerHTML+"."
+                    texto.innerHTML = "█"+texto.innerHTML+"█"
                     if(contadorTexto == 9) sentido = 0;
                 } else if(sentido === 0) {
                     if(texto.innerHTML.length > textoPadrao.length) {
@@ -198,7 +197,7 @@
                         contadorTexto = 0;
                     }
                 }
-            }, 150);
+            }, 200*(contadorTexto+1));
         }
         animacaoTexto();
 
