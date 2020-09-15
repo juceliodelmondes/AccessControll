@@ -32,9 +32,10 @@
 
             .div-foto {
                 transition: .3s linear;
-                transition-delay: .3s;
+                transition-delay: .5s;
                 width: 0%;
                 height: 75%;
+                padding:10px;
                 border-left-style: solid;
                 border-right-style: solid;
                 border-width: thick;
@@ -53,31 +54,35 @@
             }
 
             .imgp {
-                transition: height .08s linear;
+                transition: height .09s linear;
                 position: relative;
                 height: 0%;
                 width: 100%;
                 max-width: 100%;
-                padding: 10px;
                 filter: grayscale(1);
                 border-radius:15px;
                 object-fit: cover;
+                box-shadow: 0px 0px 20px 0px #ffffff94;
             }
 
             .lines {
-                filter: opacity(0.3);
-                padding: 12px;
+                filter: opacity(0);
                 height: 100%;
                 width: 100%;
                 max-width: 100%;
                 position: absolute;
-                border-radius: 15px;
+                border-radius: 25px;
+                padding:10px;
             }
 
             .efeito2Imagem {
                 transition: .1s linear;
-                transition-delay: .5s;
+                transition-delay: .8s;
                 height: 100%;
+            }
+
+            .lineOn {
+                filter:opacity(0.3)
             }
 
 
@@ -90,7 +95,7 @@
             <div class="div-central">
                 <div class="div-foto" id="div-foto">
                     <img class="imgp" id="imagem" src='https://img.estadao.com.br/fotos/crop/1200x900/resources/jpg/7/6/1566336669167.jpg'/>
-                    <img class="lines" src="/horizontal2.png"/>
+                    <img class="lines" id="lines" src="/horizontal2.png"/>
                 </div>
             </div>
         </div>
@@ -99,23 +104,55 @@
         const visualizarFoto = () => {
             let divFoto = document.getElementById('div-foto');
             let foto = document.getElementById('imagem');
+            let lines = document.getElementById("lines");
             divFoto.classList.add("openDiv");
-            foto.classList.add("efeito2Imagem")
+            foto.classList.add("efeito2Imagem");
+            setTimeout(() => {
+                let contador = 0;
+                let efeito = setInterval(() => {
+                    if(contador % 2 == 0) lines.classList.add("lineOn");
+                    if(contador % 2 != 0) lines.classList.remove("lineOn");
+                    contador++;
+                    if(contador == 11) clearInterval(efeito);
+                }, 30);
+            }, 400);
         }
         
         const fecharFoto = () => {
-
             let divFoto = document.getElementById('div-foto');
             let foto = document.getElementById('imagem');
+            let lines = document.getElementById("lines");
             divFoto.classList.remove("openDiv");
-            foto.classList.remove("efeito2Imagem")
+            foto.classList.remove("efeito2Imagem");
+            let contador = 0;
+            let efeito = setInterval(() => {
+                if(contador % 2 == 0) lines.classList.add("lineOn");
+                if(contador % 2 != 0) lines.classList.remove("lineOn");
+                contador++;
+                if(contador == 10) clearInterval(efeito);
+            }, 25);
         }
 
         const exibirFoto = () => {
             visualizarFoto();
-            setTimeout(function(){ fecharFoto()}, 4000);
+            setTimeout(function(){ fecharFoto()}, 4500);
         }
 
+        const pesquisarAcessos = () => {
+            axios.get("http://localhost:8080/user/searchuseraccess").then(result => {
+                if(result.data.name != null) {
+                    exibirFoto();
+                }
+            });
+        }
+
+        const inicializar = () => {
+            setInterval(() => {
+                pesquisarAcessos();
+            }, 500);
+        }
+        exibirFoto();
+        inicializar();
     </script>
     </body>
   </html>

@@ -11,10 +11,8 @@ import com.access.controller.requestObject.ValidationRequestObject;
 import com.access.controller.responseObject.CommandResponseObject;
 import com.access.controller.responseObject.UserAccessResponseObject;
 import com.access.controller.service.UserService;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author Jucelio
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -53,13 +52,13 @@ public class UserController {
         user.delete(information); 
     }
     
-    @RequestMapping(value = "/uploadPicture", method = RequestMethod.POST)
+    @RequestMapping(value = "/uploadpicture", method = RequestMethod.POST)
     public void uploadPicture(@RequestParam MultipartFile picture) {
         
     }
     
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public UserAccessResponseObject search() {
+    @RequestMapping(value = "/searchuseraccess", method = RequestMethod.GET)
+    public UserAccessResponseObject searchUserAccess() {
         return user.searchUserAccess();
     }
 }
