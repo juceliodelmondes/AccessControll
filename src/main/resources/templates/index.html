@@ -138,6 +138,7 @@
         let audioCloseDiv = new Audio('CloseDiv.mp3');
         let audioOpenImage = new Audio('OpenImage.mp3');
         let audioCloseImage = new Audio('CloseImage.mp3');
+        const digito = new Audio("NovoDigito.mp3");
         const visualizarFoto = () => {
             let divFoto = document.getElementById('div-foto');
             let foto = document.getElementById('imagem');
@@ -237,6 +238,7 @@
                 texto.innerHTML += textoPadrao.slice(contadorTexto, contadorTexto+1);
                 texto.innerHTML = texto.innerHTML.replace(/█/g,"")+"█";
                 contadorTexto++;
+                digito.play();
                 if(contadorTexto >= textoPadrao.length) {
                     clearInterval(timertexto);
                     animarBarraVertical(id);
