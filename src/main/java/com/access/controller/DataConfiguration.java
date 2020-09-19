@@ -23,7 +23,7 @@ public class DataConfiguration {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://172.17.0.3:3306/accesscontroller");
+        dataSource.setUrl("jdbc:mysql://mysqlcontainer2:3306/accesscontroller");
         dataSource.setUsername("root");
         dataSource.setPassword("root"); 
         return dataSource;
