@@ -8,7 +8,7 @@ public class AccessControllerApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(AccessControllerApplication.class, args);
-        System.out.println("Servidor iniciado!");
+        System.out.println("Servidor iniciadoo!");
     }
 
 }
