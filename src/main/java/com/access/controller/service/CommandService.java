@@ -15,14 +15,20 @@ public class CommandService {
     public final String registerUser = "w";
     public final String deleteUser = "d";
     
+    //Gramáticas entre arduino e o spring no momento de gravação
+    public final String gravado = "Recorded";
+    
     public List<CommandResponseObject> comandos = new ArrayList<>();
+    
     /**
      * Adiciona novo comando para o Arduino executar.
      * @param command 
      */
     public void newCommand(CommandResponseObject command) {
+        System.out.println("Novo comando: "+command.getCommand()+" "+command.getCommandParameter());
         comandos.add(command);
     }
+    
     /**
      * Retorna qual o príxmo comando que o Arduino deverá executar
      * @return 

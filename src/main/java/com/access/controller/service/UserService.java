@@ -74,8 +74,7 @@ public class UserService {
         
     /**
      * Deleta o usuario do bando de dados e do cadastro da biometria
-     * @param information
-     * @return 
+     * @param information 
      */
     public void delete(DeleteUserRequestObject information) {
         UserModel user = repo.findByName(information.getName());

@@ -36,11 +36,20 @@ public class BiometryController {
         return bio.register(information);
     }
     
+    /**
+     * Retorna o status atual de registro um determinado usuário
+     * @param information
+     * @return 
+     */
     @RequestMapping(value = "/registerStatus", method = RequestMethod.GET)
     public StatusBiometryRequestResponse status(@RequestBody StatusBiometryRequestResponse information) {
         return bio.registerStatus(information);
     }
     
+    /**
+     * Altera o status atual de registro de um determinado usuário
+     * @param information 
+     */
     @RequestMapping(value = "/setRegisterStatus", method = RequestMethod.POST)
     public void setStatus(@RequestBody StatusBiometryRequestResponse information) {
         bio.setRegisterStatus(information);

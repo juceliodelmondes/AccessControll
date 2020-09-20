@@ -10,7 +10,8 @@ import com.access.controller.repository.UserRepository;
 import com.access.controller.requestObject.RegisterUserRequestObject;
 import com.access.controller.requestResponseObject.StatusBiometryRequestResponse;
 import com.access.controller.responseObject.CommandResponseObject;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +21,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class BiometryService {
-    //Hashmap que guarda a situação atual de registro (String) de um determinado usuario (String) 
-    //String1 = nome de usuario, String2 = status de cadastro
-    HashMap<String, String> registerStatus = new HashMap<>();
+    private List<StatusBiometryRequestResponse> registerStatus = new ArrayList<>();
     
     @Autowired
     UserRepository repo;
@@ -67,17 +66,34 @@ public class BiometryService {
         return false;
     }
     
+    /**
+     * Captura e retorna o status atual
+     * @param information
+     * @return 
+     */
     public StatusBiometryRequestResponse registerStatus(StatusBiometryRequestResponse information) {
         StatusBiometryRequestResponse statusResponse = new StatusBiometryRequestResponse();
-        if(registerStatus.get(information.getName()) != null) {
-            System.out.println("Status: "+registerStatus.get(information.getName()));
+        for(StatusBiometryRequestResponse result : registerStatus) {
+            if(result.getIdBiometry() == information.getIdBiometry()) statusResponse = result;
         }
+        registerStatus.removeIf(obj -> obj.getStatus().equals(command.gravado));
         return statusResponse;
     }
     
+    /**
+     * Seta o status atual de gravação
+     * @param information 
+     */
     public void setRegisterStatus(StatusBiometryRequestResponse information) {
-        if(information.getName() != null && information.getStatus() != null) {
-            registerStatus.put(information.getName(), information.getStatus());
+        if(information.getStatus() != null && information.getIdBiometry() != 0) {
+            boolean alteracao = false;
+            for(StatusBiometryRequestResponse result : registerStatus) {
+                if(result.getIdBiometry() == information.getIdBiometry()) {
+                    result.setStatus(information.getStatus());
+                    alteracao = true;
+                }
+            }
+            if(alteracao == false) registerStatus.add(information);
         }
     }
 }

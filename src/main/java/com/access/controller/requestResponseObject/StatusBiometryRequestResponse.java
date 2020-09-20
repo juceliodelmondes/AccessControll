@@ -10,15 +10,15 @@ package com.access.controller.requestResponseObject;
  * @author Jucelio
  */
 public class StatusBiometryRequestResponse {
-    private String name;
+    private int idBiometry;
     private String status;
     
-    public String getName() {
-        return this.name;
+    public int getIdBiometry() {
+        return this.idBiometry;
     }
     
-    public void setName(String name) {
-        this.name = name;
+    public void setIdBiometry(int idBiometry) {
+        this.idBiometry = idBiometry;
     }
     
     public String getStatus() {
