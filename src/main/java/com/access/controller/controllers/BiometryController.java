@@ -6,6 +6,7 @@
 package com.access.controller.controllers;
 
 import com.access.controller.requestObject.RegisterUserRequestObject;
+import com.access.controller.requestResponseObject.StatusBiometryRequestResponse;
 import com.access.controller.service.BiometryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -36,7 +37,12 @@ public class BiometryController {
     }
     
     @RequestMapping(value = "/registerStatus", method = RequestMethod.GET)
-    public void status(@RequestBody RegisterUserRequestObject information) {
-        
+    public StatusBiometryRequestResponse status(@RequestBody StatusBiometryRequestResponse information) {
+        return bio.registerStatus(information);
+    }
+    
+    @RequestMapping(value = "/setRegisterStatus", method = RequestMethod.POST)
+    public void setStatus(@RequestBody StatusBiometryRequestResponse information) {
+        bio.setRegisterStatus(information);
     }
 }
