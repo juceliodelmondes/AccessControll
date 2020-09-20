@@ -50,6 +50,12 @@ public class UserController {
         System.out.println("Registrando usuário");
         return user.register(information);
     }
+    
+    @RequestMapping(value = "/registerBiometry", method = RequestMethod.POST)
+    public boolean registerBiometry() {
+        return false;
+    }
+    
     /**
      * Deleta um usuário
      * @param information 

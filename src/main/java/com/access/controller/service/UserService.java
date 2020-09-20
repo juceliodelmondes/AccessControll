@@ -14,6 +14,7 @@ import com.access.controller.responseObject.CommandResponseObject;
 import com.access.controller.responseObject.UserAccessResponseObject;
 import java.util.ArrayList;
 import java.util.List;
+import javax.sound.midi.Soundbank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,38 +54,20 @@ public class UserService {
         }
         return command;
     }
-    
     /**
-     * Register realizará um cadastro de uma nova pessoa.
-     * O algoritmo vai procurar o id biometria mais próximo para o novo usuário.
+     * Regis
      * @param information
      * @return 
      */
     public boolean register(RegisterUserRequestObject information) {
-        UserModel user = repo.findByName(information.getName());
-        int idBiometry = 0;
-        if(user == null) {
-            for(int i = 0; i < 150; i++) {
-                user = repo.findByIdBiometry(i);
-                if(user == null) {
-                    idBiometry = i;
-                    break;
-                }
-            }
-            if(user == null) {
-                UserModel newUser = new UserModel();
-                newUser.setName(information.getName());
-                newUser.setAccess(information.getAccess());
-                newUser.setIdBiometry(idBiometry);
-                try {
-                    newUser = repo.save(newUser);
-                    CommandResponseObject commandObj = new CommandResponseObject();
-                    commandObj.setCommand(commandObj.registerUser);
-                    commandObj.setCommandParameter(idBiometry);
-                    command.newCommand(commandObj);
-                    return newUser != null;
-                } catch (Exception er) { }
-            }
+        try {
+            UserModel newUser = new UserModel();
+            newUser.setName(information.getName());
+            newUser.setAccess(information.getAccess());
+            repo.save(newUser);
+            return repo.findByName(information.getName()) != null;
+        } catch (Exception er) {
+            System.out.println(er.getMessage());
         }
         return false;
     }
