@@ -8,9 +8,6 @@ package com.access.controller.responseObject;
  * @author Jucelio
  */
 public class CommandResponseObject {
-    //Lista de comandos padrões
-    public final String registerUser = "w";
-    public final String deleteUser = "d";
     
     private String command; //comando 
     private int commandParameter; //Parâmetro do comando

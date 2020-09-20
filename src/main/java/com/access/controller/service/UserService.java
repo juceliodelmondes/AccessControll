@@ -14,7 +14,6 @@ import com.access.controller.responseObject.CommandResponseObject;
 import com.access.controller.responseObject.UserAccessResponseObject;
 import java.util.ArrayList;
 import java.util.List;
-import javax.sound.midi.Soundbank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +39,7 @@ public class UserService {
      */
     public CommandResponseObject validateAccess(ValidationRequestObject information) {
         System.out.println("Validando usuario");
-        CommandResponseObject command = new CommandResponseObject();
+        CommandResponseObject commandResponse = new CommandResponseObject();
         UserModel user = repo.findByIdBiometry(information.getId());
         if(user != null) {
             System.out.println("Usuário: "+user.getName()+" acesso: "+user.getAccess());
@@ -49,13 +48,14 @@ public class UserService {
             newAccess.setAccess(user.getAccess());
             usersAccess.add(newAccess);
         } else { //caso tenha o dado gravado no sensor e não tiver no banco, remover do sensor
-            command.setCommand(command.deleteUser);
-            command.setCommandParameter(information.getId());
+            commandResponse.setCommand(this.command.deleteUser);
+            commandResponse.setCommandParameter(information.getId());
         }
-        return command;
+        return commandResponse;
     }
+    
     /**
-     * Regis
+     * Registra um novo usuário caso não exista
      * @param information
      * @return 
      */
@@ -73,6 +73,38 @@ public class UserService {
     }
     
     /**
+     * Registra uma nova biometria
+     * @param information
+     * @return 
+     */
+    public boolean registerBiometry(RegisterUserRequestObject information) {
+        UserModel user = repo.findByName(information.getName());
+        if(user != null) {
+            user.setIdBiometry(0);
+            user.setRecordedBiometry(false);
+            try {
+                user = repo.save(user);
+                if(user != null) {
+                    int nextId = 0;
+                    for(int i = 1; i < 150; i++) {
+                        UserModel search = repo.findByIdBiometry(i);
+                        if(search == null) {
+                            nextId = i;
+                            break;
+                        }
+                    }
+                    if(nextId > 0) {
+                        
+                    }
+                }
+            } catch (Exception er) {
+                System.out.println(er.getMessage());
+            }
+        }
+        return false;
+    }
+    
+    /**
      * Deleta o usuario do bando de dados e do cadastro da biometria
      * @param information
      * @return 
@@ -80,10 +112,10 @@ public class UserService {
     public void delete(DeleteUserRequestObject information) {
         UserModel user = repo.findByName(information.getName());
         if(user != null) {
-            CommandResponseObject commandObj = new CommandResponseObject();
-            commandObj.setCommand(commandObj.deleteUser);
-            commandObj.setCommandParameter(user.getIdBiometry());
-            command.newCommand(commandObj);
+            CommandResponseObject commandResponse = new CommandResponseObject();
+            commandResponse.setCommand(command.deleteUser);
+            commandResponse.setCommandParameter(user.getIdBiometry());
+            command.newCommand(commandResponse);
             repo.deleteById(repo.findByName(information.getName()).getId());
         }
     }

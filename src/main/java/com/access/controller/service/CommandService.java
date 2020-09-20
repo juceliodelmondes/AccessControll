@@ -11,6 +11,10 @@ import org.springframework.stereotype.Service;
  */
 @Service 
 public class CommandService {
+    //Lista de comandos padrões
+    public final String registerUser = "w";
+    public final String deleteUser = "d";
+    
     public List<CommandResponseObject> comandos = new ArrayList<>();
     /**
      * Adiciona novo comando para o Arduino executar.

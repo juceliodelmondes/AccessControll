@@ -52,8 +52,8 @@ public class UserController {
     }
     
     @RequestMapping(value = "/registerBiometry", method = RequestMethod.POST)
-    public boolean registerBiometry() {
-        return false;
+    public boolean registerBiometry(@RequestBody RegisterUserRequestObject information) {
+        return user.registerBiometry(information);
     }
     
     /**

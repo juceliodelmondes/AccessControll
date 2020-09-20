@@ -26,7 +26,8 @@ public class UserModel {
     @Column(length = 255)
     private String token;
     @Column(length = 3)
-    private int idBiometry; 
+    private int idBiometry;
+    private boolean recordedBiometry;
     private boolean access;
     
     public int getId() { 
@@ -59,6 +60,14 @@ public class UserModel {
     
     public void setIdBiometry(int idBiometry) {
         this.idBiometry = idBiometry;
+    }
+    
+    public boolean getRecordedBiometry() {
+        return this.recordedBiometry;
+    }
+    
+    public void setRecordedBiometry(boolean recordedBiometry) {
+        this.recordedBiometry = recordedBiometry;
     }
     
     public boolean getAccess() {
