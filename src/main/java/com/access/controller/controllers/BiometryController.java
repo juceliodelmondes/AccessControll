@@ -25,9 +25,18 @@ public class BiometryController {
     
     @Autowired
     BiometryService bio;
-    
+    /**
+     * Registra uma nova biometria
+     * @param information
+     * @return 
+     */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public boolean register(@RequestBody RegisterUserRequestObject information) {
         return bio.register(information);
+    }
+    
+    @RequestMapping(value = "/registerStatus", method = RequestMethod.GET)
+    public void status(@RequestBody RegisterUserRequestObject information) {
+        
     }
 }

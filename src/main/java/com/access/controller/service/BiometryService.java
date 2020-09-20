@@ -9,6 +9,7 @@ import com.access.controller.models.UserModel;
 import com.access.controller.repository.UserRepository;
 import com.access.controller.requestObject.RegisterUserRequestObject;
 import com.access.controller.responseObject.CommandResponseObject;
+import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class BiometryService {
+    //Hashmap que guarda a situação atual de registro (String) de um determinado usuario (String) 
+    //String1 = nome de usuario, String2 = status de cadastro
+    HashMap<String, String> status = new HashMap<>();
     
     @Autowired
     UserRepository repo;
