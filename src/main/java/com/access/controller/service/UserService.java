@@ -48,7 +48,7 @@ public class UserService {
             newAccess.setAccess(user.getAccess());
             usersAccess.add(newAccess);
         } else { //caso tenha o dado gravado no sensor e não tiver no banco, remover do sensor
-            commandResponse.setCommand(this.command.deleteUser);
+            commandResponse.setCommand(command.deleteUser);
             commandResponse.setCommandParameter(information.getId());
         }
         return commandResponse;
@@ -71,39 +71,7 @@ public class UserService {
         }
         return false;
     }
-    
-    /**
-     * Registra uma nova biometria
-     * @param information
-     * @return 
-     */
-    public boolean registerBiometry(RegisterUserRequestObject information) {
-        UserModel user = repo.findByName(information.getName());
-        if(user != null) {
-            user.setIdBiometry(0);
-            user.setRecordedBiometry(false);
-            try {
-                user = repo.save(user);
-                if(user != null) {
-                    int nextId = 0;
-                    for(int i = 1; i < 150; i++) {
-                        UserModel search = repo.findByIdBiometry(i);
-                        if(search == null) {
-                            nextId = i;
-                            break;
-                        }
-                    }
-                    if(nextId > 0) {
-                        
-                    }
-                }
-            } catch (Exception er) {
-                System.out.println(er.getMessage());
-            }
-        }
-        return false;
-    }
-    
+        
     /**
      * Deleta o usuario do bando de dados e do cadastro da biometria
      * @param information

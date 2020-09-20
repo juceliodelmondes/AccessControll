@@ -51,11 +51,6 @@ public class UserController {
         return user.register(information);
     }
     
-    @RequestMapping(value = "/registerBiometry", method = RequestMethod.POST)
-    public boolean registerBiometry(@RequestBody RegisterUserRequestObject information) {
-        return user.registerBiometry(information);
-    }
-    
     /**
      * Deleta um usuário
      * @param information 
