@@ -1,7 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Classe que será utilizada para requisicao e resposta
  */
 package com.access.controller.requestResponseObject;
 

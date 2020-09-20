@@ -16,7 +16,8 @@ public class CommandService {
     public final String deleteUser = "d";
     
     //Gramáticas entre arduino e o spring no momento de gravação
-    public final String gravado = "Recorded";
+    public final String recorded = "Recorded";
+    public final String error = "Error";
     
     public List<CommandResponseObject> comandos = new ArrayList<>();
     

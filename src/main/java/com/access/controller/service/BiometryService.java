@@ -76,7 +76,7 @@ public class BiometryService {
         for(StatusBiometryRequestResponse result : registerStatus) {
             if(result.getIdBiometry() == information.getIdBiometry()) statusResponse = result;
         }
-        registerStatus.removeIf(obj -> obj.getStatus().equals(command.gravado));
+        registerStatus.removeIf(obj -> obj.getStatus().equals(command.recorded) || obj.getStatus().equals(command.error));
         return statusResponse;
     }
     
@@ -94,6 +94,23 @@ public class BiometryService {
                 }
             }
             if(alteracao == false) registerStatus.add(information);
+            /**
+             * Caso o arduino informe que a biometria foi gravada com sucesso!
+             * Ou caso o arduino informe que ocorreu algum erro
+             */
+            if(information.getStatus().equals(command.recorded) || information.getStatus().equals(command.error)) {
+                UserModel user = repo.findByIdBiometry(information.getIdBiometry());
+                if(user != null) {
+                    try {
+                        if(information.getStatus().equals(command.recorded)) user.setRecordedBiometry(true);
+                        if(information.getStatus().equals(command.error)) {
+                            user.setIdBiometry(0);
+                            user.setRecordedBiometry(false);
+                        }
+                        repo.save(user);
+                    } catch (Exception er) {}
+                }
+            }
         }
     }
 }
