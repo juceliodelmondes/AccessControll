@@ -124,7 +124,7 @@
             
         }
 
-        #botao-adicionar-foto {
+        .botao-neon {
             background-color:#005aff55;
             font-family: monospace;
             color:#a4ddff;
@@ -134,7 +134,10 @@
             border-radius: 5px;
         }
 
-        #botao-adicionar-foto:hover {
+        #botao-adicionar-foto {
+        }
+
+        .botao-neon:hover {
             transition: .5s linear;
             background-color: #005aff;
             box-shadow: 0px 0px 20px 4px #005aff;
@@ -158,9 +161,8 @@
                 </div>
             </div>
         </div>
-        <div class="div-central">
+        <div class="div-central" id="div-novo-usuario">
             <h5 class="titulo">Novo usuário</h5>
-
             <div class="row">
                 <div class="input-field">
                     <input type="text" id="nome-usuario"/>
@@ -168,12 +170,15 @@
                 </div>
             </div>
             <div class="row">
-                <button class="btn btn-flat waves-effect waves-light" id="botao-adicionar-foto">Adicionar foto</button>
+                <button class="btn btn-flat waves-effect waves-light botao-neon" id="botao-adicionar-foto" onclick="adicionarFotoBotao();">Adicionar foto</button>
             </div>
-            <div class="novo-usuario" onclick="novoUsuario();">
+            <div class="novo-usuario" onclick="registrar();">
                 <div class="botao-novo-usuario waves-effect waves-light">
                     <h5>Registrar</h5>
                 </div>
+            </div>
+            <div class="row">
+                <button class="btn btn-flat waevs-effect waves-light botao-neon" onclick="menuPrincipal();">Voltar ao menu</button>
             </div>
         </div>
     </div>
@@ -188,17 +193,18 @@
         const closeDiv = new Audio('CloseDiv.mp3');
         const novoUsuario = () => {
             clique.play();
-            setTimeout(() => {esconderDivCentral()}, 300);
+            setTimeout(() => {esconderDiv("div-central")}, 300);
+            setTimeout(() => {visualizarDiv("div-novo-usuario")}, 800);
         }
 
         const editarUsuario = () => {
             clique.play();
-            setTimeout(() => {esconderDivCentral()}, 300);
+            setTimeout(() => {esconderDiv("div-central")}, 300);
         }
 
         efeito = "";
-        const esconderDivCentral = () => {
-            let elemento = document.getElementById("div-central")
+        const esconderDiv = id => {
+            let elemento = document.getElementById(id)
             let contador = 0;
             if(typeof efeito != undefined) clearInterval(efeito);
             efeito = setInterval(() => {
@@ -210,8 +216,8 @@
             closeDiv.play();
         }
 
-        const visualizarDivCentral = () => {
-            let elemento = document.getElementById("div-central")
+        const visualizarDiv = id => {
+            let elemento = document.getElementById(id)
             let contador = 0;
             if(typeof efeito != undefined) clearInterval(efeito);
             efeito = setInterval(() => {
@@ -222,7 +228,21 @@
             }, 40)
             openDiv.play();
         }
-        //setTimeout(() => {visualizarDivCentral()},2000);
+
+        const adicionarFotoBotao = () => {
+            document.getElementById("foto-usuario").click();
+        }
+
+        const menuPrincipal = () => {
+            clique.play();
+            window.location.reload();
+        }
+
+        //registra um novo usuário
+        const registrar = () => {
+            
+        }
+        //setTimeout(() => {visualizarDiv("div-central")},1000);
     </script>
 </body>
 </html>
