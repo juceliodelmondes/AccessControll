@@ -52,6 +52,6 @@ public class BiometryController {
      */
     @RequestMapping(value = "/setRegisterStatus", method = RequestMethod.POST)
     public void setStatus(@RequestBody StatusBiometryRequestResponse information) {
-        bio.setRegisterStatus(information);
+        bio.setRegisterStatus(information); 
     }
 }

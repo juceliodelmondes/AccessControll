@@ -115,10 +115,35 @@
             display: none;
         }
         
+        #nome-usuario {
+            color: white;
+            border-bottom-color:#005aff;
+        }
 
+        #nome-usuario:active {
+            
+        }
+
+        #botao-adicionar-foto {
+            background-color:#005aff55;
+            font-family: monospace;
+            color:#a4ddff;
+            border-color: #005aff;
+            border-width: 2px;
+            border-style: solid;
+            border-radius: 5px;
+        }
+
+        #botao-adicionar-foto:hover {
+            transition: .5s linear;
+            background-color: #005aff;
+            box-shadow: 0px 0px 20px 4px #005aff;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
+    <input class="hide" type="file" id="foto-usuario"/>
     <div class="container-principal">
         <div class="div-central invisivel" id="div-central">
             <h5 class="titulo">Controle de usuários</h5>
@@ -130,6 +155,24 @@
             <div class="editar-usuario" onclick="editarUsuario()">
                 <div class='botao-editar-usuario waves-effect waves-light'>
                     <h5>Editar</h5>
+                </div>
+            </div>
+        </div>
+        <div class="div-central">
+            <h5 class="titulo">Novo usuário</h5>
+
+            <div class="row">
+                <div class="input-field">
+                    <input type="text" id="nome-usuario"/>
+                    <label style="color:#a4ddff;" for='nome-usuario'>Nome:</label>
+                </div>
+            </div>
+            <div class="row">
+                <button class="btn btn-flat waves-effect waves-light" id="botao-adicionar-foto">Adicionar foto</button>
+            </div>
+            <div class="novo-usuario" onclick="novoUsuario();">
+                <div class="botao-novo-usuario waves-effect waves-light">
+                    <h5>Registrar</h5>
                 </div>
             </div>
         </div>
@@ -179,7 +222,7 @@
             }, 40)
             openDiv.play();
         }
-        setTimeout(() => {visualizarDivCentral()},2000);
+        //setTimeout(() => {visualizarDivCentral()},2000);
     </script>
 </body>
 </html>
