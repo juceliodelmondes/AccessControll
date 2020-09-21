@@ -240,7 +240,18 @@
 
         //registra um novo usuário
         const registrar = () => {
-            
+            const name = document.getElementById("nome-usuario").value;
+            if(name != "") {
+                const obj = {
+                    "name" : name,
+                    "access" : true
+                }
+                axios.post("http://localhost:8080/user/register", obj).then(result => {
+                    if(result.data) {
+                        M.toast({html: '<b>Usuário registrado!</b>', classes: 'rounded green'});
+                    } else M.toast({html: '<b>Verifique as informações!</b>', classes: 'rounded red'});
+                });
+            }
         }
         //setTimeout(() => {visualizarDiv("div-central")},1000);
     </script>
