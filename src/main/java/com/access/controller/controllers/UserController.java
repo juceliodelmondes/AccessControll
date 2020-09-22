@@ -47,7 +47,7 @@ public class UserController {
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public boolean register(@RequestBody RegisterUserRequestObject information) {
-        System.out.println("Registrando usuário");
+        System.out.println("Registrando usuário "+information.getName());
         return user.register(information);
     }
     
@@ -68,6 +68,7 @@ public class UserController {
     public void uploadPicture(@RequestParam MultipartFile picture) {
         
     }
+    
     /**
      * Retorna quais usuários que estão sendo validados no exato momento.
      * @return 

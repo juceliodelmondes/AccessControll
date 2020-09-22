@@ -146,7 +146,10 @@
     </style>
 </head>
 <body>
-    <input class="hide" type="file" id="foto-usuario"/>
+    <form action="http://192.168.1.100:8080/user/uploadpicture" method="POST" part="file" enctype="multipart/form-data">
+        <input name="picture" class="hide" type="file" id="foto-usuario"/>
+        <button type="submit" class="hide" id="botao-enviar-foto"></button>
+    </form>
     <div class="container-principal">
         <div class="div-central invisivel" id="div-central">
             <h5 class="titulo">Controle de usuários</h5>
@@ -246,9 +249,10 @@
                     "name" : name,
                     "access" : true
                 }
-                axios.post("http://localhost:8080/user/register", obj).then(result => {
+                axios.post("http://192.168.1.100:8080/user/register", obj).then(result => {
                     if(result.data) {
                         M.toast({html: '<b>Usuário registrado!</b>', classes: 'rounded green'});
+                        document.getElementById("botao-enviar-foto").click();
                     } else M.toast({html: '<b>Verifique as informações!</b>', classes: 'rounded red'});
                 });
             }
