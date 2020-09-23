@@ -240,22 +240,31 @@
             clique.play();
             window.location.reload();
         }
-
         //registra um novo usuário
         const registrar = () => {
             const name = document.getElementById("nome-usuario").value;
+            const foto = document.getElementById("foto-usuario");
             if(name != "") {
-                const obj = {
-                    "name" : name,
-                    "access" : true
-                }
-                axios.post("http://192.168.1.100:8080/user/register", obj).then(result => {
-                    if(result.data) {
-                        M.toast({html: '<b>Usuário registrado!</b>', classes: 'rounded green'});
-                        document.getElementById("botao-enviar-foto").click();
-                    } else M.toast({html: '<b>Verifique as informações!</b>', classes: 'rounded red'});
-                });
-            }
+                if(typeof foto.files[0] != "undefined") {
+                    const reader = new FileReader();
+                    reader.onloadend = function () {
+                        const obj = {
+                            "name" : name,
+                            "access" : true,
+                            "image" : reader.result
+                        }
+
+                        console.log(reader.result);
+                        axios.post("http://192.168.1.100:8080/user/register", obj).then(result => {
+                            if(result.data) {
+                                M.toast({html: '<b>Usuário registrado!</b>', classes: 'rounded green'});
+                                document.getElementById("botao-enviar-foto").click();
+                            } else M.toast({html: '<b>Verifique as informações!</b>', classes: 'rounded red'});
+                        });
+                    }
+                    reader.readAsDataURL(foto.files[0]);
+                } else M.toast({html: '<b>Adicione uma foto para o usuário!</b>', classes: 'rounded red'});
+            } else M.toast({html: '<b>Adicione um nome para o usuário!</b>', classes: 'rounded red'});
         }
         //setTimeout(() => {visualizarDiv("div-central")},1000);
     </script>
