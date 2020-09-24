@@ -3,8 +3,6 @@ Classe Objeto para a requisição de cadastro de novo usuário
 */
 package com.access.controller.requestObject;
 
-import org.springframework.web.multipart.MultipartFile;
-
 /**
  *
  * @author Jucelio
@@ -12,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class RegisterUserRequestObject {
     private String name;
     private boolean access;
-    private MultipartFile image;
+    private String image; //base 64
     
     public String getName() {
         return this.name;
@@ -30,11 +28,11 @@ public class RegisterUserRequestObject {
         this.access = access;
     }
     
-    public MultipartFile getImage() {
+    public String getImage() {
         return this.image;
     }
     
-    public void setImage(MultipartFile image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }

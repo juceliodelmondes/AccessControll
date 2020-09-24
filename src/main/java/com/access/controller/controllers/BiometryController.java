@@ -10,6 +10,8 @@ import com.access.controller.requestResponseObject.StatusBiometryRequestResponse
 import com.access.controller.service.BiometryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,7 +33,7 @@ public class BiometryController {
      * @param information
      * @return 
      */
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @PostMapping("/register")
     public boolean register(@RequestBody RegisterUserRequestObject information) {
         return bio.register(information);
     }
@@ -41,7 +43,7 @@ public class BiometryController {
      * @param information
      * @return 
      */
-    @RequestMapping(value = "/registerStatus", method = RequestMethod.GET)
+    @GetMapping("/registerStatus")
     public StatusBiometryRequestResponse status(@RequestBody StatusBiometryRequestResponse information) {
         return bio.registerStatus(information);
     }
@@ -50,7 +52,7 @@ public class BiometryController {
      * Altera o status atual de registro de um determinado usuário
      * @param information 
      */
-    @RequestMapping(value = "/setRegisterStatus", method = RequestMethod.POST)
+    @PostMapping("/setRegisterStatus")
     public void setStatus(@RequestBody StatusBiometryRequestResponse information) {
         bio.setRegisterStatus(information); 
     }

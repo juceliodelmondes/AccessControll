@@ -13,6 +13,8 @@ import com.access.controller.responseObject.UserAccessResponseObject;
 import com.access.controller.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,7 +38,7 @@ public class UserController {
      * @param information
      * @return 
      */
-    @RequestMapping(value = "/validate", method = RequestMethod.POST)
+    @PostMapping("/validate")
     public CommandResponseObject validate(@RequestBody ValidationRequestObject information) {
         return user.validateAccess(information);
     }
@@ -45,7 +47,7 @@ public class UserController {
      * @param information
      * @return true em caso de sucesso
      */
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @PostMapping("/register")
     public boolean register(@RequestBody RegisterUserRequestObject information) {
         System.out.println("Registrando usuário "+information.getName());
         return user.register(information);
@@ -55,7 +57,7 @@ public class UserController {
      * Deleta um usuário
      * @param information 
      */
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @PostMapping("/delete")
     public void delete(@RequestBody DeleteUserRequestObject information) {
         user.delete(information); 
     }
@@ -64,7 +66,7 @@ public class UserController {
      * Recebe a foto e grava no diretorio
      * @param picture 
      */
-    @RequestMapping(value = "/uploadpicture", method = RequestMethod.POST)
+    @PostMapping("/uploadpicture")
     public void uploadPicture(@RequestParam MultipartFile picture) {
         
     }
@@ -73,7 +75,7 @@ public class UserController {
      * Retorna quais usuários que estão sendo validados no exato momento.
      * @return 
      */
-    @RequestMapping(value = "/searchuseraccess", method = RequestMethod.GET)
+    @GetMapping("/searchuseraccess")
     public UserAccessResponseObject searchUserAccess() {
         return user.searchUserAccess();
     }

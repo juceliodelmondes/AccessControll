@@ -5,24 +5,30 @@
  */
 package com.access.controller.controllers;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- *
+ * Controla as rodas do front-end
  * @author Jucelio
  */
 @RestController
-public class IndexController {
+public class RouteViewController {
     /**
      * Retorna a página index no endereço /
      * @return 
      */
-    @RequestMapping(value = "/", method = RequestMethod.GET) 
+    @GetMapping("/")
     public ModelAndView index() {
         System.out.println("INDEX"); 
         return new ModelAndView("index");
+    }
+    
+    @GetMapping("/user")
+    public ModelAndView user() {
+        return new ModelAndView("user");
     }
 }

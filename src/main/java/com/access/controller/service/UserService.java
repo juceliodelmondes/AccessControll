@@ -12,8 +12,10 @@ import com.access.controller.requestObject.RegisterUserRequestObject;
 import com.access.controller.requestObject.ValidationRequestObject;
 import com.access.controller.responseObject.CommandResponseObject;
 import com.access.controller.responseObject.UserAccessResponseObject;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,10 +66,12 @@ public class UserService {
             UserModel newUser = new UserModel();
             newUser.setName(information.getName());
             newUser.setAccess(information.getAccess());
-            repo.save(newUser);
+            System.out.println(information.getImage());
+            //repo.save(newUser);
             return repo.findByName(information.getName()) != null;
         } catch (Exception er) {
-            System.out.println(er.getMessage());
+            System.out.println(er.getMessage()); 
+            System.out.println("Error");
         }
         return false;
     }
