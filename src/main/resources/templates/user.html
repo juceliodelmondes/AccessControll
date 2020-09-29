@@ -146,10 +146,7 @@
     </style>
 </head>
 <body>
-    <form action="http://192.168.1.100:8080/user/uploadpicture" method="POST" part="file" enctype="multipart/form-data">
-        <input name="picture" class="hide" type="file" id="foto-usuario"/>
-        <button type="submit" class="hide" id="botao-enviar-foto"></button>
-    </form>
+    <input type="file" style="display:none" id="foto-usuario"/>
     <div class="container-principal">
         <div class="div-central invisivel" id="div-central">
             <h5 class="titulo">Controle de usuários</h5>
@@ -177,7 +174,12 @@
             </div>
             <div class="novo-usuario" onclick="registrar();">
                 <div class="botao-novo-usuario waves-effect waves-light">
-                    <h5>Registrar</h5>
+                    <h5>Cadastrar</h5>
+                </div>
+            </div>
+            <div class="novo-usuario" onclick="registrar();">
+                <div class="botao-novo-usuario waves-effect waves-light">
+                    <h5>Cadastrar com biometria</h5>
                 </div>
             </div>
             <div class="row">
@@ -186,10 +188,7 @@
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script
-  src="https://code.jquery.com/jquery-3.5.1.min.js"
-  integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
-  crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script>
         const clique = new Audio("Clique.mp3");
         const openDiv = new Audio("OpenDiv.mp3");
@@ -242,30 +241,32 @@
         }
         //registra um novo usuário
         const registrar = () => {
-            const name = document.getElementById("nome-usuario").value;
-            const foto = document.getElementById("foto-usuario");
-            if(name != "") {
-                if(typeof foto.files[0] != "undefined") {
-                    const reader = new FileReader();
-                    reader.onloadend = function () {
-                        const obj = {
-                            "name" : name,
-                            "access" : true,
-                            "image" : reader.result
+            if(registrando == false) {
+                const name = document.getElementById("nome-usuario").value;
+                const foto = document.getElementById("foto-usuario");
+                if(name != "") {
+                    if(typeof foto.files[0] != "undefined") {
+                        const reader = new FileReader();
+                        reader.onloadend = function () {
+                            registrando = true;
+                            const obj = {
+                                "name" : name,
+                                "access" : true,
+                                "image" : reader.result
+                            }
+                            console.log(reader.result);
+                            axios.post("http://192.168.1.100:8080/user/register", obj).then(result => {
+                                if(result.data) M.toast({html: '<b>Usuário registrado!</b>', classes: 'rounded green'});
+                                    else M.toast({html: '<b>Verifique as informações!</b>', classes: 'rounded red'});
+                                registrando = false;
+                            });
                         }
-
-                        console.log(reader.result);
-                        axios.post("http://192.168.1.100:8080/user/register", obj).then(result => {
-                            if(result.data) {
-                                M.toast({html: '<b>Usuário registrado!</b>', classes: 'rounded green'});
-                                document.getElementById("botao-enviar-foto").click();
-                            } else M.toast({html: '<b>Verifique as informações!</b>', classes: 'rounded red'});
-                        });
-                    }
-                    reader.readAsDataURL(foto.files[0]);
-                } else M.toast({html: '<b>Adicione uma foto para o usuário!</b>', classes: 'rounded red'});
-            } else M.toast({html: '<b>Adicione um nome para o usuário!</b>', classes: 'rounded red'});
+                        reader.readAsDataURL(foto.files[0]);
+                    } else M.toast({html: '<b>Adicione uma foto para o usuário!</b>', classes: 'rounded red'});
+                } else M.toast({html: '<b>Adicione um nome para o usuário!</b>', classes: 'rounded red'});
+            }            
         }
+        registrando = false;
         //setTimeout(() => {visualizarDiv("div-central")},1000);
     </script>
 </body>

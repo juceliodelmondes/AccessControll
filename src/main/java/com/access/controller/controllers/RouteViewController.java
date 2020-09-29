@@ -6,8 +6,6 @@
 package com.access.controller.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,15 +16,17 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 public class RouteViewController {
     /**
-     * Retorna a página index no endereço /
+     * Retorna a página de monitoramento de usuários
      * @return 
      */
     @GetMapping("/")
     public ModelAndView index() {
-        System.out.println("INDEX"); 
         return new ModelAndView("index");
     }
-    
+    /**
+     * Retorna a página de controle de usuários
+     * @return 
+     */
     @GetMapping("/user")
     public ModelAndView user() {
         return new ModelAndView("user");

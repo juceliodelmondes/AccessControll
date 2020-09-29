@@ -39,24 +39,17 @@ public class BiometryService {
             user.setIdBiometry(0);
             user.setRecordedBiometry(false);
             try {
-                user = repo.save(user);
-                if(user != null) {
-                    int nextId = 0;
+                if(repo.save(user) != null) {
                     for(int i = 1; i < 150; i++) {
-                        UserModel search = repo.findByIdBiometry(i);
-                        if(search == null) {
-                            nextId = i;
-                            break;
+                        if(repo.findByIdBiometry(i) == null) {
+                            user.setIdBiometry(i);
+                            user = repo.save(user);
+                            CommandResponseObject commandResponse = new CommandResponseObject();
+                            commandResponse.setCommand(command.registerUser);
+                            commandResponse.setCommandParameter(i);
+                            command.newCommand(commandResponse);                        
+                            return user != null;
                         }
-                    }
-                    if(nextId > 0) {
-                        user.setIdBiometry(nextId);
-                        user = repo.save(user);
-                        CommandResponseObject commandResponse = new CommandResponseObject();
-                        commandResponse.setCommand(command.registerUser);
-                        commandResponse.setCommandParameter(nextId);
-                        command.newCommand(commandResponse);                        
-                        return user != null;
                     }
                 }
             } catch (Exception er) {

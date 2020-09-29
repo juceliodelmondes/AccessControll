@@ -6,14 +6,16 @@
 package com.access.controller.service;
 
 import java.util.Random;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Jucelio
  */
+@Service
 public class TokenService {
     private final String charAllowedToken = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    private final int tokenLength = 512;
+    private final int tokenLength = 32;
     /**
      * Gera um token
      * @return retorna o token gerado

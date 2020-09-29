@@ -12,13 +12,16 @@ import com.access.controller.requestObject.RegisterUserRequestObject;
 import com.access.controller.requestObject.ValidationRequestObject;
 import com.access.controller.responseObject.CommandResponseObject;
 import com.access.controller.responseObject.UserAccessResponseObject;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 /**
  *
  * @author Jucelio
@@ -33,6 +36,12 @@ public class UserService {
     
     @Autowired
     CommandService command;   
+    
+    @Autowired
+    TokenService token;
+    
+    @Autowired
+    ImageService image;
     
     /**
      * Valida o Id (leitor) com o banco de dados com o tipo de acesso
@@ -63,13 +72,18 @@ public class UserService {
      */
     public boolean register(RegisterUserRequestObject information) {
         try {
+            System.out.println("cadastrando "+information.getName());
             UserModel newUser = new UserModel();
             newUser.setName(information.getName());
-            newUser.setAccess(information.getAccess());
-            System.out.println(information.getImage());
-            //repo.save(newUser);
-            return repo.findByName(information.getName()) != null;
+            newUser.setAccess(information.getAccess()); 
+            newUser.setToken(token.generateToken());          
+            if(repo.save(newUser) != null) {
+                image.saveImage(information, newUser);
+                return true;
+            } else return false;
+            
         } catch (Exception er) {
+            System.out.println(er);
             System.out.println(er.getMessage()); 
             System.out.println("Error");
         }

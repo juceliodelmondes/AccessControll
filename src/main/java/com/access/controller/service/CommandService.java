@@ -15,6 +15,7 @@ public class CommandService {
     public final String registerUser = "w";
     public final String deleteUser = "d";
     
+    
     //Gramáticas entre arduino e o spring no momento de gravação
     public final String recorded = "Recorded";
     public final String error = "Error";

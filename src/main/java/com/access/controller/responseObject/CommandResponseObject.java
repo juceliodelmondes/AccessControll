@@ -10,8 +10,7 @@ package com.access.controller.responseObject;
 public class CommandResponseObject {
     
     private String command; //comando 
-    private int commandParameter; //Parâmetro do comando
-      
+    private int commandParameter; //Parâmetro do comando      
     
     public String getCommand() {
         return this.command;
