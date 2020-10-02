@@ -8,6 +8,7 @@ package com.access.controller.service;
 import com.access.controller.models.UserModel;
 import com.access.controller.requestObject.RegisterUserRequestObject;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,8 @@ public class ImageService {
                 stream.write(result);
                 stream.close();
                 System.out.println("Salvando imagem para o usuario: "+user.getName());
+            } catch (IOException er) {
+                System.out.println(er.getMessage());
             } catch (Exception er) {
                 er.printStackTrace();
             }
