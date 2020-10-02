@@ -51,6 +51,7 @@ public class UserService {
             UserAccessResponseObject newAccess = new UserAccessResponseObject();
             newAccess.setName(user.getName());
             newAccess.setAccess(user.getAccess());
+            newAccess.setToken(user.getToken());
             usersAccess.add(newAccess);
         } else { //caso tenha o dado gravado no sensor e não tiver no banco, remover do sensor
             commandResponse.setCommand(command.deleteUser);

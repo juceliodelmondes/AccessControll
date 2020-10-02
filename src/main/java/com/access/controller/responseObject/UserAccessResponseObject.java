@@ -11,6 +11,7 @@ package com.access.controller.responseObject;
 public class UserAccessResponseObject {
     private String name;
     private boolean access;
+    private String token;
     
     public String getName() {
         return this.name;
@@ -26,5 +27,13 @@ public class UserAccessResponseObject {
     
     public void setAccess(boolean access) {
         this.access = access;
+    }
+    
+    public String getToken() {
+        return this.token;
+    }
+    
+    public void setToken(String token) {
+        this.token = token;
     }
 }
