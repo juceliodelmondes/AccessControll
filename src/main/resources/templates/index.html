@@ -139,9 +139,10 @@
         const audioOpenImage = new Audio('Audio\\OpenImage.mp3');
         const audioCloseImage = new Audio('Audio\\CloseImage.mp3');
         const digito = new Audio("Audio\\NovoDigito.mp3");
-        const visualizarFoto = () => {
+        const visualizarFoto = (token) => {
             let divFoto = document.getElementById('div-foto');
             let foto = document.getElementById('imagem');
+            foto.src="images/"+token+".png";
             let lines = document.getElementById("lines");
             let icon = document.getElementById('icone').classList.add("invisivel");
             divFoto.classList.add("openDiv");
@@ -186,20 +187,21 @@
             digitarTexto("Aguardando biometria", "texto-aguardando");
         }
         
-        const exibirFoto = () => {
-            visualizarFoto();
+        const exibirFoto = (token) => {
+            visualizarFoto(token);
             setTimeout(function(){ fecharFoto()}, 4500);
         }
 
         const pesquisarAcessos = () => {
             axios.get("http://192.168.1.100:8080/user/searchuseraccess").then(result => {
                 if(result.data.name != null) {
+                    console.log(result.data);
                     digitarTexto(result.data.name, "texto-aguardando");
                     let elemento = document.getElementById("div-biometria");
                     if(result.data.access) {
                         console.log(elemento);
                     }
-                    exibirFoto();
+                    exibirFoto(result.data.token);
                 }
             });
         }
