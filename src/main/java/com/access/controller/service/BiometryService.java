@@ -8,6 +8,7 @@ package com.access.controller.service;
 import com.access.controller.models.UserModel;
 import com.access.controller.repository.UserRepository;
 import com.access.controller.requestObject.RegisterUserRequestObject;
+import com.access.controller.requestResponseObject.RegisterBiometryRequestResponse;
 import com.access.controller.requestResponseObject.StatusBiometryRequestResponse;
 import com.access.controller.responseObject.CommandResponseObject;
 import java.util.ArrayList;
@@ -33,8 +34,9 @@ public class BiometryService {
      * @param information
      * @return 
      */
-    public boolean register(RegisterUserRequestObject information) {
+    public RegisterBiometryRequestResponse register(RegisterBiometryRequestResponse information) {
         UserModel user = repo.findByName(information.getName());
+        RegisterBiometryRequestResponse response = new RegisterBiometryRequestResponse();
         if(user != null) {
             user.setIdBiometry(0);
             user.setRecordedBiometry(false);
@@ -47,8 +49,10 @@ public class BiometryService {
                             CommandResponseObject commandResponse = new CommandResponseObject();
                             commandResponse.setCommand(command.registerUser);
                             commandResponse.setCommandParameter(i);
-                            command.newCommand(commandResponse);                        
-                            return user != null;
+                            command.newCommand(commandResponse);
+                            response.setIdBiometry(user.getIdBiometry());
+                            response.setName(user.getName());
+                            break;
                         }
                     }
                 }
@@ -56,7 +60,7 @@ public class BiometryService {
                 System.out.println(er.getMessage());
             }
         }
-        return false;
+        return response;
     }
     
     /**

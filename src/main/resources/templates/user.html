@@ -280,11 +280,8 @@
         
         const registrarBiometria = () => {
             const name = document.getElementById('nome-usuario').value;
-            const obj = {
-                "name" : name
-            };
-            axios.post("http://192.168.1.100:8080/biometry/register", obj).then(result => {
-               console.log(result); 
+            axios.post("http://192.168.1.100:8080/biometry/register", {"name" : name}).then(result => {
+               console.log(result);
             });
             
         };

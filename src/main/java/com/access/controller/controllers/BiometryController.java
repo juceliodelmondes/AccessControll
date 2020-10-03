@@ -6,6 +6,7 @@
 package com.access.controller.controllers;
 
 import com.access.controller.requestObject.RegisterUserRequestObject;
+import com.access.controller.requestResponseObject.RegisterBiometryRequestResponse;
 import com.access.controller.requestResponseObject.StatusBiometryRequestResponse;
 import com.access.controller.service.BiometryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class BiometryController {
      * @return 
      */
     @PostMapping("/register")
-    public boolean register(@RequestBody RegisterUserRequestObject information) {
+    public RegisterBiometryRequestResponse register(@RequestBody RegisterBiometryRequestResponse information) {
         return bio.register(information);
     }
     
