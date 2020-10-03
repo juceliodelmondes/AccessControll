@@ -183,12 +183,12 @@
             <div class="row">
                 <button class="btn btn-flat waves-effect waves-light botao-neon" id="botao-adicionar-foto" onclick="adicionarFotoBotao();">Adicionar foto</button>
             </div>
-            <div class="novo-usuario" onclick="registrar();">
+            <div class="novo-usuario" onclick="registrar(1);">
                 <div class="botao-novo-usuario waves-effect waves-light">
                     <h5>Cadastrar</h5>
                 </div>
             </div>
-            <div class="novo-usuario" onclick="registrar();">
+            <div class="novo-usuario" onclick="registrar(2);">
                 <div class="botao-novo-usuario waves-effect waves-light">
                     <h5>Cadastrar com biometria</h5>
                 </div>
@@ -250,7 +250,7 @@
             window.location.reload();
         }
         //registra um novo usuário
-        const registrar = () => {
+        const registrar = (param) => {
             if(registrando == false) {
                 const name = document.getElementById("nome-usuario").value;
                 const foto = document.getElementById("foto-usuario");
@@ -264,20 +264,32 @@
                                 "access" : true,
                                 "image" : reader.result
                             }
-                            console.log(reader.result);
                             axios.post("http://192.168.1.100:8080/user/register", obj).then(result => {
-                                if(result.data) M.toast({html: '<b>Usuário registrado!</b>', classes: 'rounded green'});
-                                    else M.toast({html: '<b>Verifique as informações!</b>', classes: 'rounded red'});
+                                if(result.data) {
+                                    Materialize.toast('Usuário registrado!', 3000, 'green rounded');
+                                    if(param === 2) registrarBiometria();
+                                } else Materialize.toast('Verifique as informações!', 3000, 'red rounded');
                                 registrando = false;
                             });
-                        }
+                        };
                         reader.readAsDataURL(foto.files[0]);
-                    } else Materialize.toast('Adicione uma foto do usuário', 3000, 'red rounded')
-                } else Materialize.toast('Adicione um nome para o usuário', 3000, 'red rounded')
-            }            
-        }
+                    } else Materialize.toast('Adicione uma foto do usuário', 3000, 'red rounded');
+                } else Materialize.toast('Adicione um nome para o usuário', 3000, 'red rounded');
+            };
+        };
+        
+        const registrarBiometria = () => {
+            const name = document.getElementById('nome-usuario').value;
+            const obj = {
+                "name" : name
+            };
+            axios.post("http://192.168.1.100:8080/biometry/register", obj).then(result => {
+               console.log(result); 
+            });
+            
+        };
         registrando = false;
-            $('.modal').modal();
+        $('.modal').modal();
         //setTimeout(() => {visualizarDiv("div-central")},1000);
     </script>
 </body>
