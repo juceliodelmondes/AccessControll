@@ -145,16 +145,41 @@
             box-shadow: 0px 0px 20px 4px #005aff;
             cursor: pointer;
         }
+        
+        .modal {
+            
+            background-color: #001844de;
+            border-color:#005aff;
+            border-style: solid;
+            border-width: 2px;
+            border-radius: 5px;
+        }
+        
+        .modal h4 {
+            color:white;
+        }
+        
     </style>
 </head>
 <body>
-    <div id="modal1" class="modal">
+    <div id="modalAproximeBiometria" class="modal">
         <div class="modal-content">
-            <h4>Modal Header</h4>
-            <p>A bunch of text</p>
+            <center><h4>Aproxime a biometria</h4></center>
+            <div class="row">
+                <div class="col s12" style="display:flex; justify-content: center;">
+                    <img style="width:25%; border-radius:10px;" src="https://lh3.googleusercontent.com/proxy/3oEM8BkvKlsviE-ppYUZTtBGq4QmRHWSOe0tiNiSNucQ0HGaaHczRtSoaC3gbedjee6gfQB0XjXg5o1YpV7AbSzaGedPwbwJq4YvorSnFiF2i9R5y4KCvcS4d2HPsSdq"/>
+                </div>
+            </div>
         </div>
-        <div class="modal-footer">
-            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+    <div id="modalRemovaBiometria" class="modal">
+        <div class="modal-content">
+            <center><h4>Remova a biometria</h4></center>
+            <div class="row">
+                <div class="col s12" style="display:flex; justify-content: center;">
+                    <img style="width:25%; border-radius:10px; filter: saturate(0);" src="https://lh3.googleusercontent.com/proxy/3oEM8BkvKlsviE-ppYUZTtBGq4QmRHWSOe0tiNiSNucQ0HGaaHczRtSoaC3gbedjee6gfQB0XjXg5o1YpV7AbSzaGedPwbwJq4YvorSnFiF2i9R5y4KCvcS4d2HPsSdq"/>
+                </div>
+            </div>
         </div>
     </div>
     <input type="file" style="display:none" id="foto-usuario"/>
@@ -263,7 +288,7 @@
                                 "name" : name,
                                 "access" : true,
                                 "image" : reader.result
-                            }
+                            };
                             axios.post("http://192.168.1.100:8080/user/register", obj).then(result => {
                                 if(result.data) {
                                     Materialize.toast('Usuário registrado!', 3000, 'green rounded');
@@ -281,10 +306,58 @@
         const registrarBiometria = () => {
             const name = document.getElementById('nome-usuario').value;
             axios.post("http://192.168.1.100:8080/biometry/register", {"name" : name}).then(result => {
-               console.log(result);
+                if(result.data.idBiometry > 0) {
+                    loopStatus = true;
+                    setTimeout(function () {
+                        statusBiometria(result.data.idBiometry);
+                    },1000);
+                }
             });
-            
         };
+        
+        loopStatus = false;
+        statusAtual = "";
+        const statusBiometria = (info) => {
+            if(loopStatus) {
+                axios.post("http://192.168.1.100:8080/biometry/registerStatus", {"idBiometry" : info}).then(result => {
+                    console.log(result.data);
+                    if(result.data.status === null) loopStatus = false;
+                    if(loopStatus) {
+                        setTimeout(function () {
+                            statusBiometria(info);
+                        },300);
+                    }
+                    if(result.data.status === "Waiting" && statusAtual !== "Waiting") {
+                        statusAtual = "Waiting";
+                        openDiv.play();
+                        $("#modalAproximeBiometria").modal('open');
+                    }
+                    
+                    if(result.data.status === "Removef" && statusAtual !== "Removef") {
+                        statusAtual = "Removef";
+                        openDiv.play();
+                        $("#modalAproximeBiometria").modal('close');
+                        $("#modalRemovaBiometria").modal('open');
+                    }
+                    
+                    if(result.data.status === "Waiting2" && statusAtual !== "Waiting2") {
+                        statusAtual = "Waiting2";
+                        openDiv.play();
+                        $("#modalRemovaBiometria").modal('close');
+                        $("#modalAproximeBiometria").modal('open');
+                    }
+                    
+                    if(result.data.status === "Recorded" && statusAtual !== "Recorded") {
+                        statusAtual = "Recorded";
+                        openDiv.play();
+                        $("#modalRemovaBiometria").modal('close');
+                        $("#modalAproximeBiometria").modal('close');
+                        Materialize.toast('Biometria registrada!', 3000, 'green rounded');
+                    }
+                });
+            }
+        };
+        
         registrando = false;
         $('.modal').modal();
         //setTimeout(() => {visualizarDiv("div-central")},1000);

@@ -43,7 +43,7 @@ public class BiometryController {
      * @param information
      * @return 
      */
-    @GetMapping("/registerStatus")
+    @PostMapping("/registerStatus")
     public StatusBiometryRequestResponse status(@RequestBody StatusBiometryRequestResponse information) {
         return bio.registerStatus(information);
     }
