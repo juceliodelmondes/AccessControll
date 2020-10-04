@@ -53,6 +53,8 @@ public class UserService {
             newAccess.setAccess(user.getAccess());
             newAccess.setToken(user.getToken());
             usersAccess.add(newAccess);
+            if(user.getAccess()) commandResponse.setTextSpeech("Bem vindo "+user.getName()+"!");
+                    else commandResponse.setTextSpeech("Acesso bloqueado para : "+user.getName());
         } else { //caso tenha o dado gravado no sensor e não tiver no banco, remover do sensor
             commandResponse.setCommand(command.deleteUser);
             commandResponse.setCommandParameter(information.getId());

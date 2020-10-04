@@ -11,6 +11,7 @@ public class CommandResponseObject {
     
     private String command; //comando 
     private int commandParameter; //Parâmetro do comando      
+    private String textSpeech; //texto para a fala no csharp
     
     public String getCommand() {
         return this.command;
@@ -27,4 +28,13 @@ public class CommandResponseObject {
     public void setCommandParameter(int parameter) {
         this.commandParameter = parameter;
     }
+    
+    public String getTextSpeech() {
+        return this.textSpeech;
+    }
+    
+    public void setTextSpeech(String textSpeech) {
+        this.textSpeech = textSpeech;
+    }
+    
 }

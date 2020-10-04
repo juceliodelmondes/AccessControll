@@ -182,7 +182,7 @@
             </div>
         </div>
     </div>
-    <input type="file" style="display:none" id="foto-usuario"/>
+    <input type="file" style="display:none" id="foto-usuario" accept="image/png, image/jpeg, image/jpg"/>
     <div class="container-principal">
         <div class="div-central invisivel" id="div-central">
             <h5 class="titulo">Controle de usuários</h5>
@@ -307,10 +307,12 @@
             const name = document.getElementById('nome-usuario').value;
             axios.post("http://192.168.1.100:8080/biometry/register", {"name" : name}).then(result => {
                 if(result.data.idBiometry > 0) {
+                    console.log("resultado");
+                    console.log(result);
                     loopStatus = true;
                     setTimeout(function () {
                         statusBiometria(result.data.idBiometry);
-                    },1000);
+                    },2000);
                 }
             });
         };
@@ -318,6 +320,7 @@
         loopStatus = false;
         statusAtual = "";
         const statusBiometria = (info) => {
+            console.log("cadstrando "+info);
             if(loopStatus) {
                 axios.post("http://192.168.1.100:8080/biometry/registerStatus", {"idBiometry" : info}).then(result => {
                     console.log(result.data);

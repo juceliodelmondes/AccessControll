@@ -7,7 +7,6 @@ package com.access.controller.service;
 
 import com.access.controller.models.UserModel;
 import com.access.controller.repository.UserRepository;
-import com.access.controller.requestObject.RegisterUserRequestObject;
 import com.access.controller.requestResponseObject.RegisterBiometryRequestResponse;
 import com.access.controller.requestResponseObject.StatusBiometryRequestResponse;
 import com.access.controller.responseObject.CommandResponseObject;
@@ -29,6 +28,7 @@ public class BiometryService {
     
     @Autowired
     CommandService command;
+    
     /**
      * Registra uma nova biometria
      * @param information
@@ -71,7 +71,10 @@ public class BiometryService {
     public StatusBiometryRequestResponse registerStatus(StatusBiometryRequestResponse information) {
         StatusBiometryRequestResponse statusResponse = new StatusBiometryRequestResponse();
         for(StatusBiometryRequestResponse result : registerStatus) {
-            if(result.getIdBiometry() == information.getIdBiometry()) statusResponse = result;
+            if(result.getIdBiometry() == information.getIdBiometry()) {
+                statusResponse = result;
+                System.out.println(result.getStatus()); 
+            }
         }
         registerStatus.removeIf(obj -> obj.getStatus().equals(command.recorded) || obj.getStatus().equals(command.error));
         return statusResponse;
