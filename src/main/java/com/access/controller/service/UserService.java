@@ -43,7 +43,6 @@ public class UserService {
      * @return 
      */
     public CommandResponseObject validateAccess(ValidationRequestObject information) {
-        System.out.println("Validando usuario");
         CommandResponseObject commandResponse = new CommandResponseObject();
         UserModel user = repo.findByIdBiometry(information.getId());
         if(user != null) {
@@ -53,7 +52,7 @@ public class UserService {
             newAccess.setAccess(user.getAccess());
             newAccess.setToken(user.getToken());
             usersAccess.add(newAccess);
-            if(user.getAccess()) commandResponse.setTextSpeech("Bem vindo "+user.getName()+"!");
+            if(user.getAccess()) commandResponse.setTextSpeech("Acesso liberado para "+user.getName()+"!");
                     else commandResponse.setTextSpeech("Acesso bloqueado para : "+user.getName());
         } else { //caso tenha o dado gravado no sensor e não tiver no banco, remover do sensor
             commandResponse.setCommand(command.deleteUser);
@@ -69,7 +68,6 @@ public class UserService {
      */
     public boolean register(RegisterUserRequestObject information) {
         try {
-            System.out.println("cadastrando "+information.getName());
             UserModel newUser = new UserModel();
             newUser.setName(information.getName());
             newUser.setAccess(information.getAccess()); 
@@ -78,9 +76,7 @@ public class UserService {
                 image.saveImage(information, newUser);
                 return true;
             } else return false;
-            
         } catch (Exception er) {
-            System.out.println(er);
             System.out.println(er.getMessage()); 
             System.out.println("Error");
         }
